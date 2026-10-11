@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盲路监控 - 远程监视</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #1a1a2e;
+            color: #eee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #00d9ff;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: #00ff88;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .video-container {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 90vw;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        #video-stream {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            display: block;
+        }
+        
+        .info-panel {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .info-card {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .info-card h3 {
+            color: #00d9ff;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .info-card .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            color: #666;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1> 盲路监控系统</h1>
+        <span class="status">● 实时监控中</span>
+    </div>
+    
+    <div class="video-container">
+        <div class="video-wrapper">
+            <img id="video-stream" src="/video_feed" alt="视频流">
+        </div>
+        
+        <div class="info-panel">
+            <div class="info-card">
+                <h3>偏移量</h3>
+                <div class="value" id="offset-value">--</div>
+            </div>
+            <div class="info-card">
+                <h3>方向角</h3>
+                <div class="value" id="angle-value">--</div>
+            </div>
+            <div class="info-card">
+                <h3>状态</h3>
+                <div class="value" id="state-value">--</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        远程监视终端 | 数据延迟 < 100ms
+    </div>
+    
+    <script>
+        // 简单的状态更新（可选）
+        setInterval(() => {
+            fetch('/api/status')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.valid) {
+                        document.getElementById('offset-value').textContent = 
+                            (data.offset * 100).toFixed(1) + '%';
+                        document.getElementById('angle-value').textContent = 
+                            data.angle.toFixed(1) + '°';
+                        document.getElementById('state-value').textContent = data.state;
+                    }
+                })
+                .catch(() => {});
+        }, 500);
+    </script>
+</body>
+</html>
