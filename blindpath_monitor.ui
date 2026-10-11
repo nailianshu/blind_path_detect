@@ -89,6 +89,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_fps">
+       <property name="text">
+        <string>FPS: -- | 推理: --ms</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-weight: bold; color: #0066cc;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="spacer_right">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -146,6 +156,20 @@
       <widget class="QPushButton" name="pushButton_savesnapshot">
        <property name="text">
         <string>保存快照</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_opencamera">
+       <property name="text">
+        <string>打开摄像头</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_imageanalysis">
+       <property name="text">
+        <string>图片分析</string>
        </property>
       </widget>
      </item>
@@ -313,6 +337,38 @@
    </hints>
   </connection>
   <connection>
+   <sender>pushButton_opencamera</sender>
+   <signal>clicked()</signal>
+   <receiver>BlindPathMonitorForm</receiver>
+   <slot>openCamera()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>640</x>
+     <y>600</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>400</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_imageanalysis</sender>
+   <signal>clicked()</signal>
+   <receiver>BlindPathMonitorForm</receiver>
+   <slot>openImageAnalysis()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>720</x>
+     <y>600</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>400</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>pushButton_openvideo</sender>
    <signal>clicked()</signal>
    <receiver>BlindPathMonitorForm</receiver>
@@ -333,5 +389,7 @@
   <slot>startWriteVideo()</slot>
   <slot>writeSnapshot()</slot>
   <slot>openVideoFile()</slot>
+  <slot>openCamera()</slot>
+  <slot>openImageAnalysis()</slot>
  </slots>
 </ui>

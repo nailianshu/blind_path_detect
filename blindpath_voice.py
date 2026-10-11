@@ -26,6 +26,10 @@ class VoiceAlertEngine(QObject):
         # ★ 核心参数：连续异常持续时间阈值（秒）
         self.min_abnormal_duration = 2.0        # 至少持续2秒异常才触发
         
+        # ★ 告警冷却时间（秒）：两次播报之间的最小间隔
+        self.alert_cooldown = 5.0               # 默认5秒冷却期
+        self.last_alert_time = 0.0              # 上次播报的时间戳
+        
         # ★ 使用独立的状态追踪（基于时间，不是帧数）
         self.current_alert_type = None          # 当前正在累积的异常类型
         self.abnormal_start_time = None         # 当前异常开始的时间戳
@@ -79,9 +83,22 @@ class VoiceAlertEngine(QObject):
         self.min_abnormal_duration = duration
 
     def checkAndAlert(self, metrics: dict):
-        """检查当前帧指标，基于时间累积触发告警"""
+        """
+        检查当前帧指标，基于时间累积触发告警
         
-        # ★ 检查开关和引擎
+        告警逻辑：
+        1. 检查语音开关和 TTS 引擎是否可用
+        2. 从指标字典中提取关键数据（盲道数量、偏移量、角度、面积占比）
+        3. 判断当前帧的异常类型
+        4. 基于时间的状态机：异常状态持续超过阈值才触发告警
+        5. 触发后进入冷却期，冷却期内不重复播报
+        6. 冷却期过后且异常仍然存在，才再次播报
+        
+        参数:
+            metrics: 指标字典（来自 blindpath_metrics.analyze）
+        """
+        
+        # 检查开关和引擎
         if not self.enabled:
             return
         
@@ -91,8 +108,9 @@ class VoiceAlertEngine(QObject):
         count = metrics.get("count", 0)
         offset = metrics.get("offset", None)
         angle = metrics.get("angle", None)
+        area_ratio = metrics.get("area_ratio", 0.0)
 
-        # ★ 诊断：打印当前帧的关键指标（每10帧打印一次）
+        # 诊断：打印当前帧的关键指标（每10帧打印一次）
         if hasattr(self, '_frame_count'):
             self._frame_count += 1
         else:
@@ -101,13 +119,13 @@ class VoiceAlertEngine(QObject):
         if self._frame_count % 10 == 1:
             offset_pct = abs(offset) * 100 if offset is not None else None
             angle_val = angle if angle is not None else None
-            print(f"📊 帧{self._frame_count}: count={count}, offset={offset_pct}%, angle={angle_val}°")
+            print(f"📊 帧{self._frame_count}: count={count}, offset={offset_pct}%, angle={angle_val}°, area={area_ratio*100:.2f}%")
 
-        # ★ 判断当前帧的异常类型
-        alert_type = self._determineAlertType(count, offset, angle)
+        # 判断当前帧的异常类型
+        alert_type = self._determineAlertType(count, offset, angle, area_ratio)
         now = time.time()
         
-        # ★ 基于时间的状态机逻辑
+        # 基于时间的状态机逻辑
         if alert_type is None:
             # 【正常帧】
             if self.current_alert_type is not None:
@@ -122,18 +140,33 @@ class VoiceAlertEngine(QObject):
             duration = now - self.abnormal_start_time
             
             if duration < self.min_abnormal_duration:
-                # 还没到2秒，继续等待（每秒打印一次）
+                # 还没到阈值时间，继续等待（每秒打印一次）
                 if int(duration) > int(duration - (now - getattr(self, '_last_print_time', now))):
                     print(f"⚠️ {alert_type} 持续中: {duration:.1f}s / {self.min_abnormal_duration}s")
                     self._last_print_time = now
             else:
-                # ★ 达到2秒！触发告警
-                print(f"🚨 触发告警！{alert_type}, 持续{duration:.1f}s")
-                self._triggerAlert(alert_type, offset)
+                # 达到阈值时间！检查是否在冷却期内
+                time_since_last_alert = now - self.last_alert_time
                 
-                # ★ 关键：触发后强制重置，必须先恢复正常才能再次触发
-                self.current_alert_type = None
-                self.abnormal_start_time = None
+                if time_since_last_alert < self.alert_cooldown:
+                    # 在冷却期内，跳过播报但不重置状态
+                    remaining = self.alert_cooldown - time_since_last_alert
+                    if not hasattr(self, '_cooldown_logged') or self._cooldown_logged != alert_type:
+                        print(f"⏸️ {alert_type} 在冷却期内，跳过播报（剩余 {remaining:.1f}s）")
+                        self._cooldown_logged = alert_type
+                    # 不重置状态，继续等待冷却期结束
+                else:
+                    # 冷却期已过，触发告警
+                    print(f"🚨 触发告警！{alert_type}, 持续{duration:.1f}s")
+                    self._triggerAlert(alert_type, offset, area_ratio)
+                    
+                    # 记录播报时间
+                    self.last_alert_time = now
+                    
+                    # 关键：触发后重置状态，必须先恢复正常才能再次触发
+                    self.current_alert_type = None
+                    self.abnormal_start_time = None
+                    self._cooldown_logged = None
                 
         else:
             # 【新的异常类型】→ 重新开始计时
@@ -146,27 +179,64 @@ class VoiceAlertEngine(QObject):
             self.abnormal_start_time = now
             self._last_print_time = now
 
-    def _determineAlertType(self, count, offset, angle):
-        """判断当前帧的异常类型"""
+    def _determineAlertType(self, count, offset, angle, area_ratio=0.0):
+        """
+        判断当前帧的异常类型
+        
+        异常类型包括：
+        - "no_paving": 未检测到盲道
+        - "area_missing": 盲道面积占比过低（< 2%），可能缺失
+        - "area_obstacle": 盲道面积占比偏小（2%~5%），可能有障碍物
+        - "offset_right/left": 偏移过大
+        - "angle_large": 方向角过大
+        
+        参数:
+            count: 检测到的盲道实例数量
+            offset: 归一化偏移量
+            angle: 方向角（度）
+            area_ratio: 盲道面积占比（0.0~1.0）
+        
+        返回:
+            异常类型字符串，或 None 表示正常
+        """
         if count == 0:
             return "no_paving"
+        
+        # 检查面积占比（新增：基于面积判断盲道缺失/障碍物）
+        if area_ratio < 0.02:  # 2% 以下
+            return "area_missing"
+        elif area_ratio < 0.05:  # 2%~5%
+            return "area_obstacle"
         
         if offset is not None and angle is not None:
             offset_pct = abs(offset) * 100
             angle_abs = abs(angle)
             
+            # 检查偏移是否超过阈值
             if offset_pct >= self.alert_offset_thresh:
                 return "offset_right" if offset > 0 else "offset_left"
             
+            # 检查角度是否超过阈值
             if angle_abs >= self.alert_angle_thresh:
                 return "angle_large"
         
         return None
 
-    def _triggerAlert(self, alert_type: str, offset=None):
-        """根据异常类型触发对应的语音告警"""
+    def _triggerAlert(self, alert_type: str, offset=None, area_ratio=0.0):
+        """
+        根据异常类型触发对应的语音告警
+        
+        参数:
+            alert_type: 异常类型字符串
+            offset: 归一化偏移量（可选）
+            area_ratio: 盲道面积占比（可选）
+        """
         if alert_type == "no_paving":
             msg = "未检测到盲道，请小心前行"
+        elif alert_type == "area_missing":
+            msg = "盲道缺失，请小心前行"
+        elif alert_type == "area_obstacle":
+            msg = "盲道可能有障碍物，请注意"
         elif alert_type == "offset_right":
             msg = "向左调整"
         elif alert_type == "offset_left":
@@ -265,6 +335,8 @@ class VoiceAlertEngine(QObject):
         """重置所有状态（换素材时调用）"""
         self.current_alert_type = None
         self.abnormal_start_time = None
+        self.last_alert_time = 0.0  # 重置冷却时间
+        self._cooldown_logged = None
 
     def stop(self):
         """停止并释放资源"""

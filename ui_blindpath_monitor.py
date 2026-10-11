@@ -51,6 +51,10 @@ class Ui_BlindPathMonitorForm(object):
         self.label_operation.setText("")
         self.label_operation.setObjectName("label_operation")
         self.horizontalLayout_2.addWidget(self.label_operation)
+        self.label_fps = QtWidgets.QLabel(BlindPathMonitorForm)
+        self.label_fps.setStyleSheet("font-weight: bold; color: #0066cc;")
+        self.label_fps.setObjectName("label_fps")
+        self.horizontalLayout_2.addWidget(self.label_fps)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -73,6 +77,12 @@ class Ui_BlindPathMonitorForm(object):
         self.pushButton_savesnapshot = QtWidgets.QPushButton(BlindPathMonitorForm)
         self.pushButton_savesnapshot.setObjectName("pushButton_savesnapshot")
         self.horizontalLayout.addWidget(self.pushButton_savesnapshot)
+        self.pushButton_opencamera = QtWidgets.QPushButton(BlindPathMonitorForm)
+        self.pushButton_opencamera.setObjectName("pushButton_opencamera")
+        self.horizontalLayout.addWidget(self.pushButton_opencamera)
+        self.pushButton_imageanalysis = QtWidgets.QPushButton(BlindPathMonitorForm)
+        self.pushButton_imageanalysis.setObjectName("pushButton_imageanalysis")
+        self.horizontalLayout.addWidget(self.pushButton_imageanalysis)
         self.pushButton_openvideo = QtWidgets.QPushButton(BlindPathMonitorForm)
         self.pushButton_openvideo.setObjectName("pushButton_openvideo")
         self.horizontalLayout.addWidget(self.pushButton_openvideo)
@@ -137,6 +147,8 @@ class Ui_BlindPathMonitorForm(object):
         self.retranslateUi(BlindPathMonitorForm)
         self.pushButton_savevideo.clicked.connect(BlindPathMonitorForm.startWriteVideo) # type: ignore
         self.pushButton_savesnapshot.clicked.connect(BlindPathMonitorForm.writeSnapshot) # type: ignore
+        self.pushButton_opencamera.clicked.connect(BlindPathMonitorForm.openCamera) # type: ignore
+        self.pushButton_imageanalysis.clicked.connect(BlindPathMonitorForm.openImageAnalysis) # type: ignore
         self.pushButton_openvideo.clicked.connect(BlindPathMonitorForm.openVideoFile) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(BlindPathMonitorForm)
 
@@ -147,8 +159,11 @@ class Ui_BlindPathMonitorForm(object):
         self.label.setText(_translate("BlindPathMonitorForm", "方向角(°)"))
         self.label_3.setText(_translate("BlindPathMonitorForm", "偏移(右正)"))
         self.label_2.setText(_translate("BlindPathMonitorForm", "提示："))
+        self.label_fps.setText(_translate("BlindPathMonitorForm", "FPS: -- | 推理: --ms"))
         self.pushButton_savevideo.setText(_translate("BlindPathMonitorForm", "保存视频"))
         self.pushButton_savesnapshot.setText(_translate("BlindPathMonitorForm", "保存快照"))
+        self.pushButton_opencamera.setText(_translate("BlindPathMonitorForm", "打开摄像头"))
+        self.pushButton_imageanalysis.setText(_translate("BlindPathMonitorForm", "图片分析"))
         self.pushButton_openvideo.setText(_translate("BlindPathMonitorForm", "打开视频"))
         self.groupBox_voice.setTitle(_translate("BlindPathMonitorForm", "语音告警配置"))
         self.checkBox_voice_switch.setText(_translate("BlindPathMonitorForm", "启用语音告警"))
