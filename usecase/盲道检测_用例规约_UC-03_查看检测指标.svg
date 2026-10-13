@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="772" viewBox="0 0 1280 772" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="772" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测用例规约 —— 查看检测指标（UC-03）</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简要说明</text>
+<text x="72" y="192" font-size="19" fill="#333333">系统把每帧的盲道检测指标（偏移量、方向角、面积占比、置信度）显示给操作员，供其判断盲道相对画面中心的位置关系。</text>
+<text x="72" y="232" font-size="23" font-weight="700" fill="#1F3864">2. 事件流</text>
+<text x="88" y="274" font-size="20" font-weight="700" fill="#333333">2.1 基本事件流</text>
+<text x="90" y="307" font-size="19" fill="#333333">1) 系统在检测过程中持续接收「帧 + 指标」。</text>
+<text x="90" y="337" font-size="19" fill="#333333">2) 系统以画面中心为参考线，按半宽归一化计算偏移量。</text>
+<text x="90" y="367" font-size="19" fill="#333333">3) 系统在界面显示偏移量、方向角、面积等读数。</text>
+<text x="90" y="397" font-size="19" fill="#333333">4) 读数随每帧刷新。</text>
+<text x="88" y="431" font-size="20" font-weight="700" fill="#333333">2.2 备选事件流</text>
+<text x="90" y="464" font-size="19" fill="#333333">2a) 指标无效（未检出）：显示为「无法判断」，界面变灰。</text>
+<text x="72" y="504" font-size="23" font-weight="700" fill="#1F3864">3. 特殊需求</text>
+<text x="72" y="542" font-size="19" fill="#333333">无效测量不得用 0 表示 —— 0 是有效读数，须显式区分「无数据」与「数值为 0」。</text>
+<text x="72" y="582" font-size="23" font-weight="700" fill="#1F3864">4. 前置条件</text>
+<text x="72" y="620" font-size="19" fill="#333333">检测已运行（UC-02）。</text>
+<text x="72" y="660" font-size="23" font-weight="700" fill="#1F3864">5. 后置条件</text>
+<text x="72" y="698" font-size="19" fill="#333333">操作员获得当前帧的检测指标读数。</text>
+</svg>

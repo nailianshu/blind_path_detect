@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="742" viewBox="0 0 1280 742" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="742" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测用例规约 —— 查看运行性能（UC-08）</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简要说明</text>
+<text x="72" y="192" font-size="19" fill="#333333">系统统计并显示推理帧率与单帧耗时，供操作员评估运行性能。</text>
+<text x="72" y="232" font-size="23" font-weight="700" fill="#1F3864">2. 事件流</text>
+<text x="88" y="274" font-size="20" font-weight="700" fill="#333333">2.1 基本事件流</text>
+<text x="90" y="307" font-size="19" fill="#333333">1) 系统统计推理耗时与帧率。</text>
+<text x="90" y="337" font-size="19" fill="#333333">2) 系统在界面显示性能读数。</text>
+<text x="90" y="367" font-size="19" fill="#333333">3) 读数随运行刷新。</text>
+<text x="88" y="401" font-size="20" font-weight="700" fill="#333333">2.2 备选事件流</text>
+<text x="90" y="434" font-size="19" fill="#333333">1a) 首帧包含设备预热：系统在进入稳态后给出读数。</text>
+<text x="72" y="474" font-size="23" font-weight="700" fill="#1F3864">3. 特殊需求</text>
+<text x="72" y="512" font-size="19" fill="#333333">性能读数须取稳态值，不得以单帧结果推算整段性能。</text>
+<text x="72" y="552" font-size="23" font-weight="700" fill="#1F3864">4. 前置条件</text>
+<text x="72" y="590" font-size="19" fill="#333333">检测运行中（UC-02）。</text>
+<text x="72" y="630" font-size="23" font-weight="700" fill="#1F3864">5. 后置条件</text>
+<text x="72" y="668" font-size="19" fill="#333333">操作员获得性能读数。</text>
+</svg>

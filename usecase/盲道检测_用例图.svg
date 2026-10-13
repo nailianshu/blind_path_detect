@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1080" viewBox="0 0 1520 1080"
+     font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+  <defs>
+    <marker id="openArrow" viewBox="0 0 12 12" refX="11.2" refY="6" markerWidth="12" markerHeight="12" orient="auto">
+      <path d="M1.6,1.3 L11,6 L1.6,10.7" fill="none" stroke="#8C8C8C" stroke-width="1.7"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1520" height="1080" fill="#FFFFFF"/>
+
+  <!-- 图题 -->
+  <text x="72" y="54" font-size="30" font-weight="700" fill="#1F3864">盲道检测系统 用例图</text>
+
+  <!-- 系统边界 -->
+  <rect x="270" y="90" width="940" height="880" rx="26" ry="26"
+        fill="#FBFCFE" stroke="#4472C4" stroke-width="2.4"/>
+  <text x="740" y="140" font-size="24" font-weight="700" fill="#1F3864" text-anchor="middle">盲道检测系统</text>
+
+  <!-- 关联线：画到用例中心，由椭圆白底盖住多余部分 -->
+  <g stroke="#333333" stroke-width="1.6">
+    <line x1="158" y1="516" x2="505" y2="245"/>
+    <line x1="158" y1="516" x2="505" y2="420"/>
+    <line x1="158" y1="516" x2="505" y2="650"/>
+    <line x1="158" y1="516" x2="505" y2="815"/>
+    <line x1="1362" y1="636" x2="985" y2="670"/>
+    <line x1="1362" y1="876" x2="985" y2="845"/>
+  </g>
+
+  <!-- 用例 -->
+  <g fill="#FFFFFF" stroke="#4472C4" stroke-width="1.8">
+    <ellipse cx="505" cy="245" rx="118" ry="48"/>
+    <ellipse cx="505" cy="420" rx="118" ry="48"/>
+    <ellipse cx="505" cy="650" rx="118" ry="48"/>
+    <ellipse cx="505" cy="815" rx="118" ry="48"/>
+    <ellipse cx="985" cy="330" rx="118" ry="48"/>
+    <ellipse cx="985" cy="460" rx="118" ry="48"/>
+    <ellipse cx="985" cy="670" rx="118" ry="48"/>
+    <ellipse cx="985" cy="845" rx="118" ry="48"/>
+  </g>
+  <g font-size="18" fill="#1F3864" text-anchor="middle">
+    <text x="505" y="252">打开检测素材</text>
+    <text x="505" y="427">运行盲道检测</text>
+    <text x="505" y="657">保存检测结果</text>
+    <text x="505" y="822">查看运行性能</text>
+    <text x="985" y="337">查看检测指标</text>
+    <text x="985" y="467">查看分级视觉提示</text>
+    <text x="985" y="677">接收语音告警</text>
+    <text x="985" y="852">远程监视检测画面</text>
+  </g>
+
+  <!-- include / extend 关系（画在椭圆之上） -->
+  <g stroke="#8C8C8C" stroke-width="1.6" stroke-dasharray="7 5" fill="none">
+    <line x1="623" y1="415" x2="867" y2="336" marker-end="url(#openArrow)"/>
+    <line x1="623" y1="432" x2="867" y2="458" marker-end="url(#openArrow)"/>
+    <line x1="912.4" y1="632.2" x2="577.6" y2="457.8" marker-end="url(#openArrow)"/>
+  </g>
+  <g font-size="16" fill="#8C8C8C" text-anchor="middle">
+    <text x="756" y="366">«include»</text>
+    <text x="756" y="437">«include»</text>
+    <text x="745" y="536">«extend»</text>
+  </g>
+
+  <!-- 参与者：检测操作员 -->
+  <g stroke="#333333" stroke-width="2.4" fill="none" stroke-linecap="round">
+    <circle cx="120" cy="470" r="20" fill="#FFFFFF"/>
+    <line x1="120" y1="490" x2="120" y2="558"/>
+    <line x1="82" y1="516" x2="158" y2="516"/>
+    <line x1="120" y1="558" x2="92" y2="613"/>
+    <line x1="120" y1="558" x2="148" y2="613"/>
+  </g>
+  <text x="120" y="652" font-size="19" fill="#333333" text-anchor="middle">检测操作员</text>
+
+  <!-- 参与者：语音引擎 -->
+  <g stroke="#333333" stroke-width="2.4" fill="none" stroke-linecap="round">
+    <circle cx="1400" cy="590" r="20" fill="#FFFFFF"/>
+    <line x1="1400" y1="610" x2="1400" y2="678"/>
+    <line x1="1362" y1="636" x2="1438" y2="636"/>
+    <line x1="1400" y1="678" x2="1372" y2="733"/>
+    <line x1="1400" y1="678" x2="1428" y2="733"/>
+  </g>
+  <text x="1400" y="772" font-size="19" fill="#333333" text-anchor="middle">语音引擎</text>
+
+  <!-- 参与者：远程监视端 -->
+  <g stroke="#333333" stroke-width="2.4" fill="none" stroke-linecap="round">
+    <circle cx="1400" cy="830" r="20" fill="#FFFFFF"/>
+    <line x1="1400" y1="850" x2="1400" y2="918"/>
+    <line x1="1362" y1="876" x2="1438" y2="876"/>
+    <line x1="1400" y1="918" x2="1372" y2="973"/>
+    <line x1="1400" y1="918" x2="1428" y2="973"/>
+  </g>
+  <text x="1400" y="1012" font-size="19" fill="#333333" text-anchor="middle">远程监视端</text>
+
+  <!-- 图例说明 -->
+  <text x="72" y="1048" font-size="16" fill="#8C8C8C">说明：实线为参与者与用例之间的关联；虚线箭头表示用例之间的关系，「«include»」为包含关系，「«extend»」为扩展关系。</text>
+</svg>

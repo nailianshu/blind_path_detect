@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import datetime
+from pathlib import Path
 
 import numpy as np
 import cv2
@@ -19,7 +20,22 @@ from blindpath_voice import VoiceAlertEngine
 from flask_server import frame_buffer, start_flask_in_background
 
 
-OUTPUT_DIR = './output'
+def get_resource_path(relative_path):
+    """
+    获取资源文件的绝对路径
+    兼容开发环境和PyInstaller打包后的.app
+    """
+    if getattr(sys, 'frozen', False):
+        # PyInstaller打包后: 使用.app/Contents/Resources/
+        base_path = os.path.join(os.path.dirname(sys.executable), '..', 'Resources')
+    else:
+        # 开发环境: 使用当前文件所在目录
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    
+    return os.path.join(base_path, relative_path)
+
+
+OUTPUT_DIR = get_resource_path('output')
 
 
 class CameraSelectDialog(QDialog):
@@ -70,15 +86,16 @@ class MyBlindPathMonitorForm(QWidget, Ui_BlindPathMonitorForm):
 
         # 加载 YOLO 模型，带错误处理
         try:
-            self.model = YOLO("./model/best0217.pt")
-            print("✅ 模型加载成功")
+            model_path = get_resource_path('model/best0217.pt')
+            self.model = YOLO(model_path)
+            print(f"✅ 模型加载成功: {model_path}")
         except Exception as e:
             print(f"❌ 模型加载失败: {e}")
             # 显示错误提示
             QMessageBox.critical(
                 self,
                 "模型加载失败",
-                f"无法加载模型文件:\n./model/best0217.pt\n\n错误信息: {str(e)}\n\n程序将无法进行推理。"
+                f"无法加载模型文件:\n{model_path}\n\n错误信息: {str(e)}\n\n程序将无法进行推理。"
             )
             self.model = None  # 设置为 None，后续操作会检查
 

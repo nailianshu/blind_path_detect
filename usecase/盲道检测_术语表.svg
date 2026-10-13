@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="824" viewBox="0 0 1280 824" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="824" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测系统 术语表</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简介</text>
+<text x="72" y="192" font-size="19" fill="#333333">本文档用于对盲道检测系统中的术语进行定义，同时对用例说明或其他文档中读者不太熟悉的术语进行解释性描述。通常来说，本文档</text>
+<text x="72" y="222" font-size="19" fill="#333333">对一些数据信息进行定义，从而使得用例规约和其他文档显得简洁易懂。</text>
+<text x="72" y="262" font-size="23" font-weight="700" fill="#1F3864">2. 定义</text>
+<text x="72" y="300" font-size="19" fill="#333333">本术语表包含了盲道检测系统中核心概念的定义。</text>
+<text x="90" y="330" font-size="19" fill="#333333">盲道：铺设在人行道上、用于引导视障人士行走的带有凸起纹理的地面铺装。</text>
+<text x="90" y="360" font-size="19" fill="#333333">检测素材：待分析的输入数据，包括视频文件、图片文件或实时摄像头画面。</text>
+<text x="90" y="390" font-size="19" fill="#333333">实例分割：在像素级区分目标实例的视觉任务，本项目用于提取盲道区域。</text>
+<text x="90" y="420" font-size="19" fill="#333333">参考线：用于衡量偏移的画面参考位置，本项目取画面中心。</text>
+<text x="90" y="450" font-size="19" fill="#333333">偏移量：盲道检测区域中心相对参考线的横向偏离程度，按画面半宽归一化。</text>
+<text x="90" y="480" font-size="19" fill="#333333">半宽归一化：以画面宽度的一半为基准对偏移做归一化；|d| = 1 表示参考线落在该行的检测边界。</text>
+<text x="90" y="510" font-size="19" fill="#333333">方向角：盲道走向相对图像方向的夹角，向远处定义，远点相对近点向右为正。</text>
+<text x="90" y="540" font-size="19" fill="#333333">面积占比：盲道检测区域占画面面积的比例。</text>
+<text x="90" y="570" font-size="19" fill="#333333">分级提示：按偏移程度与方向联合判定的视觉提示等级（正常 / 轻度 / 重度）。</text>
+<text x="90" y="600" font-size="19" fill="#333333">持续未检出：连续多帧未检测到盲道并超过设定时长的状态。</text>
+<text x="90" y="630" font-size="19" fill="#333333">状态机：对连续帧判定结果做确认、抑制抖动的逻辑模块。</text>
+<text x="90" y="660" font-size="19" fill="#333333">语音告警：偏移程度超过阈值时，由系统 TTS 引擎播报的提醒。</text>
+<text x="90" y="690" font-size="19" fill="#333333">帧缓冲：供远程监视推送使用的最新帧缓存。</text>
+<text x="90" y="720" font-size="19" fill="#333333">稳态帧率：排除设备预热后，系统稳定运行时的推理帧率。</text>
+<text x="90" y="750" font-size="19" fill="#333333">MPS：Apple Metal Performance Shaders，用于 Apple Silicon 的推理加速后端。</text>
+</svg>

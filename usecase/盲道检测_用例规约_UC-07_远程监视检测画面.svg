@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="802" viewBox="0 0 1280 802" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="802" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测用例规约 —— 远程监视检测画面（UC-07）</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简要说明</text>
+<text x="72" y="192" font-size="19" fill="#333333">远程监视端通过浏览器访问系统的视频流接口，实时查看检测画面。</text>
+<text x="72" y="232" font-size="23" font-weight="700" fill="#1F3864">2. 事件流</text>
+<text x="88" y="274" font-size="20" font-weight="700" fill="#333333">2.1 基本事件流</text>
+<text x="90" y="307" font-size="19" fill="#333333">1) 远程监视端访问系统的监视页面。</text>
+<text x="90" y="337" font-size="19" fill="#333333">2) 系统把最新帧写入帧缓冲。</text>
+<text x="90" y="367" font-size="19" fill="#333333">3) 系统以 MJPEG 流方式推送帧。</text>
+<text x="90" y="397" font-size="19" fill="#333333">4) 远程端持续接收并显示画面。</text>
+<text x="88" y="431" font-size="20" font-weight="700" fill="#333333">2.2 备选事件流</text>
+<text x="90" y="464" font-size="19" fill="#333333">2a) 暂无可用帧：推送占位画面。</text>
+<text x="90" y="494" font-size="19" fill="#333333">1a) 监视服务未启动：连接失败。</text>
+<text x="72" y="534" font-size="23" font-weight="700" fill="#1F3864">3. 特殊需求</text>
+<text x="72" y="572" font-size="19" fill="#333333">远程推送不得拖慢本地推理与界面显示。</text>
+<text x="72" y="612" font-size="23" font-weight="700" fill="#1F3864">4. 前置条件</text>
+<text x="72" y="650" font-size="19" fill="#333333">系统已启动，监视服务可用。</text>
+<text x="72" y="690" font-size="23" font-weight="700" fill="#1F3864">5. 后置条件</text>
+<text x="72" y="728" font-size="19" fill="#333333">远程端看到检测画面；连接中断时不影响本地检测。</text>
+</svg>

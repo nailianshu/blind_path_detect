@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="952" viewBox="0 0 1280 952" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="952" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测用例规约 —— 运行盲道检测（UC-02）</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简要说明</text>
+<text x="72" y="192" font-size="19" fill="#333333">操作员对已打开的素材启动盲道检测。系统在独立推理线程中逐帧执行 YOLO 实例分割，计算盲道区域的偏移、方向角、面积等指标，</text>
+<text x="72" y="222" font-size="19" fill="#333333">并通过跨线程信号把结果发送给界面显示。</text>
+<text x="72" y="262" font-size="23" font-weight="700" fill="#1F3864">2. 事件流</text>
+<text x="88" y="304" font-size="20" font-weight="700" fill="#333333">2.1 基本事件流</text>
+<text x="72" y="337" font-size="19" fill="#333333">用例始于操作员点击「开始检测」。</text>
+<text x="90" y="367" font-size="19" fill="#333333">1) 系统启动推理线程，按帧读取素材。</text>
+<text x="90" y="397" font-size="19" fill="#333333">2) 推理线程对每帧执行分割推理，过滤出盲道类别。</text>
+<text x="90" y="427" font-size="19" fill="#333333">3) 推理线程计算偏移量（按半宽归一化）、方向角、面积占比等指标。</text>
+<text x="90" y="457" font-size="19" fill="#333333">4) 推理线程通过跨线程信号把「帧 + 指标」发送给界面。</text>
+<text x="90" y="487" font-size="19" fill="#333333">5) 界面刷新视图与指标显示。</text>
+<text x="90" y="517" font-size="19" fill="#333333">6) 操作员点击「停止检测」，系统停止推理线程并回收资源。</text>
+<text x="88" y="551" font-size="20" font-weight="700" fill="#333333">2.2 备选事件流</text>
+<text x="90" y="584" font-size="19" fill="#333333">2a) 该帧未检出盲道：按「未检出」处理，指标置为无效，不参与判定。</text>
+<text x="90" y="614" font-size="19" fill="#333333">2b) 连续未检出超过设定时长：触发持续未检出提示（见 UC-04）。</text>
+<text x="90" y="644" font-size="19" fill="#333333">1a) 素材播放结束：推理线程正常结束，界面保持最后一帧结果。</text>
+<text x="72" y="684" font-size="23" font-weight="700" fill="#1F3864">3. 特殊需求</text>
+<text x="72" y="722" font-size="19" fill="#333333">推理与读帧在同一线程内交替执行；跨线程信号队列长度有限，须防止堆积。</text>
+<text x="72" y="762" font-size="23" font-weight="700" fill="#1F3864">4. 前置条件</text>
+<text x="72" y="800" font-size="19" fill="#333333">已成功打开检测素材（UC-01）。</text>
+<text x="72" y="840" font-size="23" font-weight="700" fill="#1F3864">5. 后置条件</text>
+<text x="72" y="878" font-size="19" fill="#333333">检测停止、线程释放；界面保留最终一帧的结果与指标。若中途停止，则系统回到未检测状态。</text>
+</svg>

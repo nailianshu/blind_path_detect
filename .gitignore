@@ -19,6 +19,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.pytest_cache/
 
 # Virtual environments
 venv/
@@ -43,6 +44,7 @@ output/
 *.mp4
 *.avi
 *.mov
+runs/
 
 # Model files (too large for Git)
 model/
@@ -53,9 +55,6 @@ images/
 # Logs
 log.txt
 *.log
-
-# Old files
-BlindPathMonitor.py
 
 # Video files
 video/

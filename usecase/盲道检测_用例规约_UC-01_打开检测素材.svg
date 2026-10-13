@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="892" viewBox="0 0 1280 892" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="892" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测用例规约 —— 打开检测素材（UC-01）</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简要说明</text>
+<text x="72" y="192" font-size="19" fill="#333333">本用例允许操作员选择待分析的检测素材（视频文件、图片文件或实时摄像头），系统据此建立检测会话。素材打开后即成为后续推理</text>
+<text x="72" y="222" font-size="19" fill="#333333">与指标计算的输入。</text>
+<text x="72" y="262" font-size="23" font-weight="700" fill="#1F3864">2. 事件流</text>
+<text x="88" y="304" font-size="20" font-weight="700" fill="#333333">2.1 基本事件流</text>
+<text x="72" y="337" font-size="19" fill="#333333">用例始于操作员选择打开检测素材。</text>
+<text x="90" y="367" font-size="19" fill="#333333">1) 系统弹出文件选择对话框，按类型过滤可识别的视频 / 图片扩展名。</text>
+<text x="90" y="397" font-size="19" fill="#333333">2) 操作员选定素材文件，或选择摄像头设备。</text>
+<text x="90" y="427" font-size="19" fill="#333333">3) 系统打开素材并读取首帧，显示于主窗口视图区。</text>
+<text x="90" y="457" font-size="19" fill="#333333">4) 系统复位上一段素材遗留的状态（检测结果、提示文字、缓存帧）。</text>
+<text x="90" y="487" font-size="19" fill="#333333">5) 系统使「开始检测」等后续操作可用。</text>
+<text x="88" y="521" font-size="20" font-weight="700" fill="#333333">2.2 备选事件流</text>
+<text x="90" y="554" font-size="19" fill="#333333">2a) 素材无法打开（路径失效或编码不支持）：系统提示错误，保持原状态不变。</text>
+<text x="90" y="584" font-size="19" fill="#333333">2b) 操作员取消选择：用例结束，系统状态不变。</text>
+<text x="72" y="624" font-size="23" font-weight="700" fill="#1F3864">3. 特殊需求</text>
+<text x="72" y="662" font-size="19" fill="#333333">素材打开阶段不启动推理，避免占用推理资源。</text>
+<text x="72" y="702" font-size="23" font-weight="700" fill="#1F3864">4. 前置条件</text>
+<text x="72" y="740" font-size="19" fill="#333333">系统已启动，主窗口与视图区已就绪。</text>
+<text x="72" y="780" font-size="23" font-weight="700" fill="#1F3864">5. 后置条件</text>
+<text x="72" y="818" font-size="19" fill="#333333">素材被载入并显示，检测会话完成初始化；若未成功打开，则系统状态不变。</text>
+</svg>

@@ -128,8 +128,16 @@ class MyBlindPathProcess(QThread):
         """
         try:
             # YOLO 推理（使用 MPS 加速，适用于 Apple Silicon）
+            # save=False 禁用保存，project="/tmp" 重定向输出到可写目录（.app 包是只读文件系统）
             t_start = time.time()
-            results = self.model.predict(frame, device="mps", verbose=False)
+            results = self.model.predict(
+                frame, 
+                device="mps", 
+                verbose=False, 
+                save=False,
+                project="/tmp",  # 重定向到可写目录
+                name="blindpath_tmp"
+            )
             inference_time = (time.time() - t_start) * 1000  # 毫秒
             result = results[0]
 
@@ -237,8 +245,11 @@ class MyBlindPathProcess(QThread):
                         return
                         
                     self.recorder.fps = cap.get(cv2.CAP_PROP_FPS)  # 读取源视频帧率
+                    frame_delay = 1.0 / self.recorder.fps if self.recorder.fps > 0 else 1.0/30.0  # 每帧延迟
+                    
                     while self.runFlag:
                         try:
+                            t_frame_start = time.time()  # 记录帧处理开始时间
                             success, frame = cap.read()
                             if not success:
                                 break
@@ -247,6 +258,12 @@ class MyBlindPathProcess(QThread):
                             metrics["is_single_frame"] = False
                             self.recorder.writeFrame(frame)  # 画完就写
                             self.done_signal.emit(frame, metrics)
+                            
+                            # 帧率控制：按原始视频FPS播放
+                            elapsed = time.time() - t_frame_start
+                            sleep_time = frame_delay - elapsed
+                            if sleep_time > 0:
+                                time.sleep(sleep_time)
                         except Exception as e:
                             print(f"❌ 视频帧处理异常: {e}")
                             continue

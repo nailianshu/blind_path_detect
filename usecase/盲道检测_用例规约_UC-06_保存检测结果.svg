@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="802" viewBox="0 0 1280 802" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="802" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测用例规约 —— 保存检测结果（UC-06）</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简要说明</text>
+<text x="72" y="192" font-size="19" fill="#333333">操作员可将检测过程录制为视频，或对当前帧保存快照，用于留存证据与整理报告。</text>
+<text x="72" y="232" font-size="23" font-weight="700" fill="#1F3864">2. 事件流</text>
+<text x="88" y="274" font-size="20" font-weight="700" fill="#333333">2.1 基本事件流</text>
+<text x="90" y="307" font-size="19" fill="#333333">1) 操作员点击「开始录制」或「快照」。</text>
+<text x="90" y="337" font-size="19" fill="#333333">2) 录制：系统创建视频写入器并逐帧写入。</text>
+<text x="90" y="367" font-size="19" fill="#333333">3) 操作员点击「停止录制」，系统释放写入器并保存文件。</text>
+<text x="90" y="397" font-size="19" fill="#333333">4) 快照：系统把当前帧写为图片文件。</text>
+<text x="88" y="431" font-size="20" font-weight="700" fill="#333333">2.2 备选事件流</text>
+<text x="90" y="464" font-size="19" fill="#333333">1a) 未打开素材：相关按钮不可用。</text>
+<text x="90" y="494" font-size="19" fill="#333333">3a) 磁盘写入失败：系统提示错误。</text>
+<text x="72" y="534" font-size="23" font-weight="700" fill="#1F3864">3. 特殊需求</text>
+<text x="72" y="572" font-size="19" fill="#333333">视频写入器须由创建它的线程释放，避免跨线程回收。</text>
+<text x="72" y="612" font-size="23" font-weight="700" fill="#1F3864">4. 前置条件</text>
+<text x="72" y="650" font-size="19" fill="#333333">已打开检测素材（UC-01）。</text>
+<text x="72" y="690" font-size="23" font-weight="700" fill="#1F3864">5. 后置条件</text>
+<text x="72" y="728" font-size="19" fill="#333333">生成视频或图片文件；失败时系统提示且不产生残缺文件。</text>
+</svg>

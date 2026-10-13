@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="802" viewBox="0 0 1280 802" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="802" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测用例规约 —— 接收语音告警（UC-05）</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简要说明</text>
+<text x="72" y="192" font-size="19" fill="#333333">当偏移程度超过设定阈值时，系统调用系统语音引擎播报告警，提醒操作员注意。</text>
+<text x="72" y="232" font-size="23" font-weight="700" fill="#1F3864">2. 事件流</text>
+<text x="88" y="274" font-size="20" font-weight="700" fill="#333333">2.1 基本事件流</text>
+<text x="90" y="307" font-size="19" fill="#333333">1) 系统在分级判定达到告警级别时触发语音告警。</text>
+<text x="90" y="337" font-size="19" fill="#333333">2) 系统检查冷却间隔，避免连续重复播报。</text>
+<text x="90" y="367" font-size="19" fill="#333333">3) 系统调用系统 TTS 引擎播报预设语音。</text>
+<text x="90" y="397" font-size="19" fill="#333333">4) 语音引擎完成播报。</text>
+<text x="88" y="431" font-size="20" font-weight="700" fill="#333333">2.2 备选事件流</text>
+<text x="90" y="464" font-size="19" fill="#333333">2a) 处于冷却间隔内：跳过本次播报。</text>
+<text x="90" y="494" font-size="19" fill="#333333">3a) TTS 不可用：静默失败，不阻塞主流程。</text>
+<text x="72" y="534" font-size="23" font-weight="700" fill="#1F3864">3. 特殊需求</text>
+<text x="72" y="572" font-size="19" fill="#333333">语音播报不得阻塞界面刷新。</text>
+<text x="72" y="612" font-size="23" font-weight="700" fill="#1F3864">4. 前置条件</text>
+<text x="72" y="650" font-size="19" fill="#333333">检测运行中，且分级判定已触发告警。</text>
+<text x="72" y="690" font-size="23" font-weight="700" fill="#1F3864">5. 后置条件</text>
+<text x="72" y="728" font-size="19" fill="#333333">操作员收到语音提醒；若未触发或处于冷却期，则系统状态不变。</text>
+</svg>

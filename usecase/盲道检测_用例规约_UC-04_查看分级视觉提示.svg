@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="802" viewBox="0 0 1280 802" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif">
+<rect x="0" y="0" width="1280" height="802" fill="#FFFFFF"/>
+<text x="72" y="78" font-size="36" font-weight="700" fill="#1F3864">盲道检测用例规约 —— 查看分级视觉提示（UC-04）</text>
+<line x1="72" y1="98" x2="1208" y2="98" stroke="#1F3864" stroke-width="3"/>
+<text x="72" y="154" font-size="23" font-weight="700" fill="#1F3864">1. 简要说明</text>
+<text x="72" y="192" font-size="19" fill="#333333">系统对偏移的程度与方向做联合判定，按程度分级（正常 / 轻度 / 重度）着色提示，并对持续未检出给出独立提示，使操作员无需读</text>
+<text x="72" y="222" font-size="19" fill="#333333">数字即可感知状态。</text>
+<text x="72" y="262" font-size="23" font-weight="700" fill="#1F3864">2. 事件流</text>
+<text x="88" y="304" font-size="20" font-weight="700" fill="#333333">2.1 基本事件流</text>
+<text x="90" y="337" font-size="19" fill="#333333">1) 系统对每帧指标按阈值分级。</text>
+<text x="90" y="367" font-size="19" fill="#333333">2) 系统结合方向做连续多帧的联合确认，抑制抖动后才切换级别。</text>
+<text x="90" y="397" font-size="19" fill="#333333">3) 系统以颜色与文字在界面上呈现当前级别。</text>
+<text x="90" y="427" font-size="19" fill="#333333">4) 持续未检出超过设定时长时，系统给出独立提示。</text>
+<text x="88" y="461" font-size="20" font-weight="700" fill="#333333">2.2 备选事件流</text>
+<text x="90" y="494" font-size="19" fill="#333333">1a) 指标无效：界面立即变灰并显示「无法判断」。</text>
+<text x="72" y="534" font-size="23" font-weight="700" fill="#1F3864">3. 特殊需求</text>
+<text x="72" y="572" font-size="19" fill="#333333">分级提示与逐帧读数须由不同区域承载，避免每帧刷新的内容冲掉需要停留的提示。</text>
+<text x="72" y="612" font-size="23" font-weight="700" fill="#1F3864">4. 前置条件</text>
+<text x="72" y="650" font-size="19" fill="#333333">检测已运行且指标可用（UC-02、UC-03）。</text>
+<text x="72" y="690" font-size="23" font-weight="700" fill="#1F3864">5. 后置条件</text>
+<text x="72" y="728" font-size="19" fill="#333333">操作员看到与当前帧一致的视觉分级提示。</text>
+</svg>
